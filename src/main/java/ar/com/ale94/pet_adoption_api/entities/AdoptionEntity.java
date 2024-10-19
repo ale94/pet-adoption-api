@@ -21,4 +21,8 @@ public class AdoptionEntity implements Serializable {
     private Long id;
     @Column(nullable = false)
     private LocalDateTime adoptionDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pet_id")
+    private PetEntity pet;
 }

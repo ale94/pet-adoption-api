@@ -1,13 +1,11 @@
 package ar.com.ale94.pet_adoption_api.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity(name = "pet")
 @Data
@@ -35,4 +33,14 @@ public class PetEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet-type_id")
     private PetTypeEntity petType;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(
+        cascade = CascadeType.ALL,
+        fetch = FetchType.EAGER,
+        orphanRemoval = true,
+        mappedBy = "pet"
+    )
+    private Set<AdoptionEntity> adoptions;
 }
