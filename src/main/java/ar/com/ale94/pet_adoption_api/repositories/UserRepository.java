@@ -1,4 +1,11 @@
 package ar.com.ale94.pet_adoption_api.repositories;
 
-public class UserRepository {
+import ar.com.ale94.pet_adoption_api.entities.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<UserRepository, Long> {
+
+    Optional<UserEntity> findByName(String name);
 }
