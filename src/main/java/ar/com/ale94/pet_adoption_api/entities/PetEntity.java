@@ -31,4 +31,8 @@ public class PetEntity implements Serializable {
     private String imageUrl;
     @Column(nullable = false)
     private String gender;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pet-type_id")
+    private PetTypeEntity petType;
 }
