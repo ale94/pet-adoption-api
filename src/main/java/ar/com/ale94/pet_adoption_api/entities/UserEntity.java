@@ -1,13 +1,11 @@
 package ar.com.ale94.pet_adoption_api.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity(name = "user")
 @Data
@@ -28,5 +26,15 @@ public class UserEntity implements Serializable {
     private String address;
     @Column(nullable = false)
     private LocalDateTime registrationDate;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "user"
+    )
+    private Set<AdoptionEntity> adoptions;
 
 }
