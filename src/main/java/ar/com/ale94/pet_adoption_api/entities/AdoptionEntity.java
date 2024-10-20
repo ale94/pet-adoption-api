@@ -27,6 +27,6 @@ public class AdoptionEntity implements Serializable {
     private PetEntity pet;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
 }
