@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDTO implements Serializable {
+public class CustomerDTO implements Serializable {
 
     private String name;
     private String email;

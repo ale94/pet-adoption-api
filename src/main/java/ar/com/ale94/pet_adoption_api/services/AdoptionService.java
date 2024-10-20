@@ -3,8 +3,8 @@ package ar.com.ale94.pet_adoption_api.services;
 import ar.com.ale94.pet_adoption_api.dtos.AdoptionDTO;
 import ar.com.ale94.pet_adoption_api.entities.AdoptionEntity;
 import ar.com.ale94.pet_adoption_api.repositories.AdoptionRepository;
+import ar.com.ale94.pet_adoption_api.repositories.CustomerRepository;
 import ar.com.ale94.pet_adoption_api.repositories.PetRepository;
-import ar.com.ale94.pet_adoption_api.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +20,13 @@ public class AdoptionService {
 
     private final AdoptionRepository adoptionRepository;
     private final PetRepository petRepository;
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
 
     public AdoptionEntity save(AdoptionDTO request) {
-        var user = this.userRepository.findById(request.getUserId()).orElseThrow();
+        var customer = this.customerRepository.findById(request.getCustomerId()).orElseThrow();
         var pet = this.petRepository.findById(request.getPetId()).orElseThrow();
         var adoptionToPersist = AdoptionEntity.builder()
-                .user(user)
+                .customer(customer)
                 .pet(pet)
                 .adoptionDate(LocalDateTime.now())
                 .build();

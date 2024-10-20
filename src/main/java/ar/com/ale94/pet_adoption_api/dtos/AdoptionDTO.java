@@ -12,6 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class AdoptionDTO implements Serializable {
-    private Long userId;
+    private Long customerId;
     private Long petId;
 }
