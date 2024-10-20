@@ -37,10 +37,10 @@ public class PetEntity implements Serializable {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.EAGER,
-        orphanRemoval = true,
-        mappedBy = "pet"
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "pet"
     )
     private Set<AdoptionEntity> adoptions;
 }
