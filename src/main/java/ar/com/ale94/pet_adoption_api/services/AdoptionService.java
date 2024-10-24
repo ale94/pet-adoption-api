@@ -1,16 +1,21 @@
 package ar.com.ale94.pet_adoption_api.services;
 
-import ar.com.ale94.pet_adoption_api.dtos.AdoptionDTO;
 import ar.com.ale94.pet_adoption_api.entities.AdoptionEntity;
+import ar.com.ale94.pet_adoption_api.models.requests.AdoptionRequest;
+import ar.com.ale94.pet_adoption_api.models.responses.AdoptionResponse;
+import ar.com.ale94.pet_adoption_api.models.responses.CustomerResponse;
+import ar.com.ale94.pet_adoption_api.models.responses.PetResponse;
 import ar.com.ale94.pet_adoption_api.repositories.AdoptionRepository;
 import ar.com.ale94.pet_adoption_api.repositories.CustomerRepository;
 import ar.com.ale94.pet_adoption_api.repositories.PetRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Transactional
@@ -22,7 +27,7 @@ public class AdoptionService {
     private final PetRepository petRepository;
     private final CustomerRepository customerRepository;
 
-    public AdoptionEntity save(AdoptionDTO request) {
+    public AdoptionResponse save(AdoptionRequest request) {
         var customer = this.customerRepository.findById(request.getCustomerId()).orElseThrow();
         var pet = this.petRepository.findById(request.getPetId()).orElseThrow();
         var adoptionToPersist = AdoptionEntity.builder()
@@ -32,6 +37,20 @@ public class AdoptionService {
                 .build();
         var adoptionPersisted = this.adoptionRepository.save(adoptionToPersist);
         log.info("Adoption saved with id {}", adoptionPersisted.getId());
-        return adoptionPersisted;
+        return this.entityToResponse(adoptionPersisted);
+    }
+
+    public List<AdoptionResponse> getAll() {
+        return this.adoptionRepository.findAll().stream()
+                .map(this::entityToResponse)
+                .toList();
+    }
+
+    private AdoptionResponse entityToResponse(AdoptionEntity entity) {
+        var response = new AdoptionResponse();
+        BeanUtils.copyProperties(entity, response);
+        response.setPet(entity.getPet().getName());
+        response.setCustomer(entity.getCustomer().getName());
+        return response;
     }
 }

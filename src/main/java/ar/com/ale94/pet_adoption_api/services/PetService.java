@@ -1,12 +1,14 @@
 package ar.com.ale94.pet_adoption_api.services;
 
-import ar.com.ale94.pet_adoption_api.dtos.PetDTO;
 import ar.com.ale94.pet_adoption_api.entities.PetEntity;
+import ar.com.ale94.pet_adoption_api.models.requests.PetRequest;
+import ar.com.ale94.pet_adoption_api.models.responses.PetResponse;
 import ar.com.ale94.pet_adoption_api.repositories.PetRepository;
 import ar.com.ale94.pet_adoption_api.repositories.PetTypeRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,17 +24,17 @@ public class PetService implements IPetService {
     private final PetTypeRepository petTypeRepository;
 
     @Override
-    public List<PetEntity> read() {
-        return this.petRepository.findAll();
+    public List<PetResponse> read() {
+        return this.petRepository.findAll().stream().map(this::entityToResponse).toList();
     }
 
     @Override
-    public PetEntity readById(Long id) {
-        return this.petRepository.findById(id).orElseThrow();
+    public PetResponse readById(Long id) {
+        return this.entityToResponse(this.petRepository.findById(id).orElseThrow());
     }
 
     @Override
-    public PetEntity save(PetDTO request) {
+    public PetResponse save(PetRequest request) {
 
         long petType = 0L;
         switch (request.getPetType().toLowerCase()) {
@@ -52,11 +54,11 @@ public class PetService implements IPetService {
                 .build();
         var petPersisted = this.petRepository.save(petToPersit);
         log.info("Pet saved with id {}", petPersisted.getId());
-        return petPersisted;
+        return this.entityToResponse(petPersisted);
     }
 
     @Override
-    public PetEntity update(PetDTO request, Long id) {
+    public PetResponse update(PetRequest request, Long id) {
         var petToUpdate = this.petRepository.findById(id).orElseThrow();
         petToUpdate.setName(request.getName());
         petToUpdate.setAge(request.getAge());
@@ -66,12 +68,18 @@ public class PetService implements IPetService {
         petToUpdate.setGender(request.getGender());
         var petPersisted = this.petRepository.save(petToUpdate);
         log.info("Pet updated with id {}", petPersisted.getId());
-        return petPersisted;
+        return this.entityToResponse(petPersisted);
     }
 
     @Override
     public void delete(Long id) {
         var petToDelete = this.petRepository.findById(id).orElseThrow();
         this.petRepository.delete(petToDelete);
+    }
+
+    private PetResponse entityToResponse(PetEntity entity) {
+        var response = new PetResponse();
+        BeanUtils.copyProperties(entity, response);
+        return response;
     }
 }

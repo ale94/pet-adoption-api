@@ -1,4 +1,4 @@
-package ar.com.ale94.pet_adoption_api.dtos;
+package ar.com.ale94.pet_adoption_api.models.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AdoptionDTO implements Serializable {
+public class AdoptionRequest implements Serializable {
     private Long customerId;
     private Long petId;
 }

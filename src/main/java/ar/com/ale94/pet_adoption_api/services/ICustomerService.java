@@ -1,7 +1,7 @@
 package ar.com.ale94.pet_adoption_api.services;
 
-import ar.com.ale94.pet_adoption_api.dtos.CustomerDTO;
-import ar.com.ale94.pet_adoption_api.entities.CustomerEntity;
+import ar.com.ale94.pet_adoption_api.models.requests.CustomerRequest;
+import ar.com.ale94.pet_adoption_api.models.responses.CustomerResponse;
 
-public interface ICustomerService extends ICrudService<CustomerDTO, CustomerEntity, Long> {
+public interface ICustomerService extends ICrudService<CustomerRequest, CustomerResponse, Long> {
 }
