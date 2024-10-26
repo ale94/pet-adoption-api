@@ -3,6 +3,7 @@ package ar.com.ale94.pet_adoption_api.controllers;
 import ar.com.ale94.pet_adoption_api.models.requests.PetRequest;
 import ar.com.ale94.pet_adoption_api.models.responses.PetResponse;
 import ar.com.ale94.pet_adoption_api.services.IPetService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,12 @@ public class PetController {
     }
 
     @PostMapping
-    public ResponseEntity<PetResponse> create(@RequestBody PetRequest request) {
+    public ResponseEntity<PetResponse> create(@Valid @RequestBody PetRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.petService.save(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PetResponse> update(@RequestBody PetRequest request, @PathVariable Long id) {
+    public ResponseEntity<PetResponse> update(@Valid @RequestBody PetRequest request, @PathVariable Long id) {
         return ResponseEntity.ok(this.petService.update(request, id));
     }
 

@@ -1,6 +1,8 @@
 package ar.com.ale94.pet_adoption_api.services;
 
 import ar.com.ale94.pet_adoption_api.entities.CustomerEntity;
+import ar.com.ale94.pet_adoption_api.enums.Tables;
+import ar.com.ale94.pet_adoption_api.exceptions.IdNotFoundException;
 import ar.com.ale94.pet_adoption_api.models.requests.CustomerRequest;
 import ar.com.ale94.pet_adoption_api.models.responses.CustomerResponse;
 import ar.com.ale94.pet_adoption_api.repositories.CustomerRepository;
@@ -31,7 +33,8 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public CustomerResponse readById(Long id) {
-        return this.entityToResponse(this.customerRepository.findById(id).orElseThrow());
+        return this.entityToResponse(this.customerRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException(Tables.customer.name())));
     }
 
     @Override
@@ -50,7 +53,8 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public CustomerResponse update(CustomerRequest request, Long id) {
-        var userToUpdate = this.customerRepository.findById(id).orElseThrow();
+        var userToUpdate = this.customerRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
         userToUpdate.setName(request.getName());
         userToUpdate.setEmail(request.getEmail());
         userToUpdate.setPhone(request.getPhone());
@@ -62,7 +66,8 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void delete(Long id) {
-        var userToDelete = this.customerRepository.findById(id).orElseThrow();
+        var userToDelete = this.customerRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
         this.customerRepository.delete(userToDelete);
     }
 

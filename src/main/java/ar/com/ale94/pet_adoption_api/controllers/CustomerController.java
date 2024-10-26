@@ -3,6 +3,7 @@ package ar.com.ale94.pet_adoption_api.controllers;
 import ar.com.ale94.pet_adoption_api.models.requests.CustomerRequest;
 import ar.com.ale94.pet_adoption_api.models.responses.CustomerResponse;
 import ar.com.ale94.pet_adoption_api.services.ICustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,12 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerResponse> create(@RequestBody CustomerRequest request) {
+    public ResponseEntity<CustomerResponse> create(@Valid @RequestBody CustomerRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.customerService.save(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerResponse> update(@RequestBody CustomerRequest request, @PathVariable Long id) {
+    public ResponseEntity<CustomerResponse> update(@Valid @RequestBody CustomerRequest request, @PathVariable Long id) {
         return ResponseEntity.ok(this.customerService.update(request, id));
     }
 
