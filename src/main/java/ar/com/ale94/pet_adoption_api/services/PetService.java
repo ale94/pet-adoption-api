@@ -1,6 +1,8 @@
 package ar.com.ale94.pet_adoption_api.services;
 
 import ar.com.ale94.pet_adoption_api.entities.PetEntity;
+import ar.com.ale94.pet_adoption_api.enums.Tables;
+import ar.com.ale94.pet_adoption_api.exceptions.IdNotFoundException;
 import ar.com.ale94.pet_adoption_api.models.requests.PetRequest;
 import ar.com.ale94.pet_adoption_api.models.responses.PetResponse;
 import ar.com.ale94.pet_adoption_api.repositories.PetRepository;
@@ -25,12 +27,16 @@ public class PetService implements IPetService {
 
     @Override
     public List<PetResponse> read() {
-        return this.petRepository.findAll().stream().map(this::entityToResponse).toList();
+        return this.petRepository.findAll()
+                .stream()
+                .map(this::entityToResponse)
+                .toList();
     }
 
     @Override
     public PetResponse readById(Long id) {
-        return this.entityToResponse(this.petRepository.findById(id).orElseThrow());
+        return this.entityToResponse(this.petRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException(Tables.pet.name())));
     }
 
     @Override
@@ -59,7 +65,8 @@ public class PetService implements IPetService {
 
     @Override
     public PetResponse update(PetRequest request, Long id) {
-        var petToUpdate = this.petRepository.findById(id).orElseThrow();
+        var petToUpdate = this.petRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException(Tables.pet.name()));
         petToUpdate.setName(request.getName());
         petToUpdate.setAge(request.getAge());
         petToUpdate.setBreed(request.getBreed());
@@ -73,7 +80,8 @@ public class PetService implements IPetService {
 
     @Override
     public void delete(Long id) {
-        var petToDelete = this.petRepository.findById(id).orElseThrow();
+        var petToDelete = this.petRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException(Tables.pet.name()));
         this.petRepository.delete(petToDelete);
     }
 

@@ -1,10 +1,10 @@
 package ar.com.ale94.pet_adoption_api.services;
 
 import ar.com.ale94.pet_adoption_api.entities.AdoptionEntity;
+import ar.com.ale94.pet_adoption_api.enums.Tables;
+import ar.com.ale94.pet_adoption_api.exceptions.IdNotFoundException;
 import ar.com.ale94.pet_adoption_api.models.requests.AdoptionRequest;
 import ar.com.ale94.pet_adoption_api.models.responses.AdoptionResponse;
-import ar.com.ale94.pet_adoption_api.models.responses.CustomerResponse;
-import ar.com.ale94.pet_adoption_api.models.responses.PetResponse;
 import ar.com.ale94.pet_adoption_api.repositories.AdoptionRepository;
 import ar.com.ale94.pet_adoption_api.repositories.CustomerRepository;
 import ar.com.ale94.pet_adoption_api.repositories.PetRepository;
@@ -28,8 +28,10 @@ public class AdoptionService {
     private final CustomerRepository customerRepository;
 
     public AdoptionResponse save(AdoptionRequest request) {
-        var customer = this.customerRepository.findById(request.getCustomerId()).orElseThrow();
-        var pet = this.petRepository.findById(request.getPetId()).orElseThrow();
+        var customer = this.customerRepository.findById(request.getCustomerId())
+                .orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
+        var pet = this.petRepository.findById(request.getPetId())
+                .orElseThrow(() -> new IdNotFoundException(Tables.pet.name()));
         var adoptionToPersist = AdoptionEntity.builder()
                 .customer(customer)
                 .pet(pet)
