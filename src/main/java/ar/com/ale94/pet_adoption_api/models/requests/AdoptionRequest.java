@@ -1,6 +1,6 @@
 package ar.com.ale94.pet_adoption_api.models.requests;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +13,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class AdoptionRequest implements Serializable {
-    @NotBlank
+    @NotNull
     private Long customerId;
-    @NotBlank
+    @NotNull
     private Long petId;
 }

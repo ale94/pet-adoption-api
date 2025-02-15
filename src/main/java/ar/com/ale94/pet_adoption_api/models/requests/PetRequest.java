@@ -1,7 +1,7 @@
 package ar.com.ale94.pet_adoption_api.models.requests;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +17,7 @@ public class PetRequest implements Serializable {
 
     @NotBlank
     private String name;
-    @NotBlank
+    @NotNull
     private Integer age;
     @NotBlank
     private String breed;
