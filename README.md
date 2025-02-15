@@ -1,15 +1,12 @@
 # 💻 Pet Adoption API REST💻
 
 ## 📚 Description 📚
-Esta API REST permite gestionar mascotas, usuarios y adopciones. Proporciona endpoints para crear, leer, actualizar y eliminar información de cada entidad.
+Esta API REST permite gestionar mascotas, clientes y adopciones. Proporciona endpoints para crear, leer, actualizar y eliminar información de cada entidad.
 
 ## 🚀 Features 🚀
 ### Adopcion (Adoption)
-- `GET /tours` - Obtener todos los tours
-- `POST /tours` - Crear un nuevo tour
-- `GET /tours/{id}` - Obtener un tour por ID
-- `PUT /tours/{id}` - Actualizar un tour por ID
-- `DELETE /tours/{id}` - Eliminar un tour por ID
+- `GET /api/adoptions` - Obtener todos las adopciones
+- `POST /api/adoptions` - Registrar una adopcion
 
 ### Mascota (Pet)
 - `GET /api/pets` - Obtener todas las mascotas
@@ -19,11 +16,11 @@ Esta API REST permite gestionar mascotas, usuarios y adopciones. Proporciona end
 - `DELETE /api/pets//{id}` - Eliminar una mascota por ID
 
 ### Clientes (Customer)
-- `GET /customers` - Obtener todos los clientes
-- `POST /customers` - Crear un nuevo cliente
-- `GET /customers/{id}` - Obtener un cliente por ID
-- `PUT /customers/{id}` - Actualizar un cliente por ID
-- `DELETE /customers/{id}` - Eliminar un cliente por ID
+- `GET /api/customers` - Obtener todos los clientes
+- `POST /api/customers` - Crear un nuevo cliente
+- `GET /api/customers/{id}` - Obtener un cliente por ID
+- `PUT /api/customers/{id}` - Actualizar un cliente por ID
+- `DELETE /api/customers/{id}` - Eliminar un cliente por ID
 
 ## 🤖 Technologies 🤖
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)
