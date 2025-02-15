@@ -5,7 +5,7 @@ Esta API REST permite gestionar mascotas, clientes y adopciones. Proporciona end
 
 ## 🚀 Features 🚀
 ### Adopcion (Adoption)
-- `GET /api/adoptions` - Obtener todos las adopciones
+- `GET /api/adoptions` - Obtener todas las adopciones
 - `POST /api/adoptions` - Registrar una adopcion
 
 ### Mascota (Pet)
